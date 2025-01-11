@@ -132,7 +132,7 @@ def clearfolder2(path):
     for f in os.listdir(path):
         if f.split(".")[-1] in clearfiles:
             os.remove(f"{path}\\{f}")
-        elif bpy.context.scene.expmsc == "clear" and (not f.split(".")[-1] in ["rfl", "txt", "level"]):
+        elif bpy.context.scene.expmsc == "clear" and (not f.split(".")[-1] in ["rfl", "txt", "level", "terrain-model", "btmesh", "material", "dds", "uv-anim", "pcmodel", "pccol"]):
             os.remove(f"{path}\\{f}")
 
 def transferfile(location, destination):
@@ -462,6 +462,10 @@ class ExportTerrain(bpy.types.Operator):
 
         for c in collections:
             currentlog = printconsole(currentlog, f"Processing {c.name}", 1)
+            
+            if len(c.objects) == 0:
+                currentlog = printconsole(currentlog, f"Collection {c.name} is empty, skipped", 1)
+                continue
 
             if "Full Name" in c: # Certain imported collections have names that are too long, which may be stored as data inside the collection
                 modelname = c["Full Name"].replace(' ', '_').replace('.', '_') # Fetches the data in the collection
@@ -504,11 +508,13 @@ class ExportTerrain(bpy.types.Operator):
                         instsettings.append("")
 
                     oldrotatemode = o.rotation_mode # Logs the old rotation mode
+                    o.rotation_mode = "QUATERNION" # To not change rotation when changing to XZY rotation, first switch to quaternion.
                     o.rotation_mode = "XZY" # Switches to XZY rotation
                     if instsettings[1].lower() != "collision":
                         pcmodelinstances = addpointcloudmodel(pcmodelinstances, instsettings[0], o.location, o.rotation_euler, o.scale)
                     if instsettings[1].lower() != "visual":
                         pccolinstances = addpointcloudcollision(pccolinstances, instsettings[0], o.location, o.rotation_euler, o.scale)
+                    o.rotation_mode = "QUATERNION" # To not change rotation when changing to orignal rotation, first switch to quaternion.
                     o.rotation_mode = oldrotatemode
 
                     currentlog = printconsole(currentlog, f"Instance settings: {instsettings}", 3)
@@ -564,7 +570,7 @@ class ExportTerrain(bpy.types.Operator):
 
             # Export selected objects with correct scale, including hidden objects
             currentlog = printconsole(currentlog, f"Exporting {c.name}", 1)
-            bpy.ops.export_scene.fbx(filepath=f"{absolutemoddir}\\levelcreator-temp\\{modelname}.fbx", use_selection=True, apply_scale_options='FBX_SCALE_UNITS', use_visible=False, add_leaf_bones=False, mesh_smooth_type='FACE')
+            bpy.ops.export_scene.fbx(filepath=f"{absolutemoddir}\\levelcreator-temp\\{modelname}.fbx", use_selection=True, apply_scale_options='FBX_SCALE_UNITS', use_visible=False, add_leaf_bones=False, mesh_smooth_type='EDGE')
             if not os.path.exists(f"{absolutemoddir}\\levelcreator-temp\\{modelname}.fbx"):
                 generalerror("Model Export Failed", f"Collection {c.name} could not be exported as FBX")
                 return{"FINISHED"}

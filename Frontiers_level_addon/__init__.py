@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Blendhog Level Creator",
     "author": "CleverChao, Ashrindy, LightningWyvern, Piranha Mayhem, Justin113D",
-    "version": (4, 0, 2),#REMEMBER TO CHANGE THIS
+    "version": (4, 0, 3),#REMEMBER TO CHANGE THIS
     "blender": (3, 6, 0),
     "category": "Object",
     "location": "View3D > toolbar > Tool > Blendhog Level Creator",
@@ -210,7 +210,7 @@ class GamechoicePanel(bpy.types.Panel):
     
     def draw(self, context):
         layout = self.layout
-        layout.label(text="version 4.0.2")#REMEMBER TO CHANGE THIS
+        layout.label(text="version 4.0.3")#REMEMBER TO CHANGE THIS
         row = layout.row()
         row.prop(context.scene, "hedgegameChoice", text="Choose a game")
 

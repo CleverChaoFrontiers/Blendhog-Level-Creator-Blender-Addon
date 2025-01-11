@@ -24,9 +24,9 @@
     "initialCondition": "CONDITION_NORMAL",
     "eventCondition": "CONDITION_NORMAL",
     "enableSolid": true,
-    "eventDriven": true,
+    "eventDriven": false,
     "moveType": "MOVE_NONE",
-    "patrolType": "PATROL_ONEWAY",
+    "patrolType": "PATROL_LOOP",
     "timeType": "TIME_LOCAL",
     "moveVector": [
       0.0,
