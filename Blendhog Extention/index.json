@@ -1,0 +1,23 @@
+{
+  "version": "v1",
+  "blocklist": [],
+  "data": [
+    {
+      "schema_version": "1.0.0",
+      "id": "blendhog_addon",
+      "name": "Blendhog Level Creator",
+      "tagline": "Tools used for creating level mods for HE-2 Games",
+      "version": "4.1.0",
+      "type": "add-on",
+      "maintainer": "CleverChao, Ashrindy, LightningWyvern, Piranha Mayhem, Justin113D",
+      "license": [
+        "MIT"
+      ],
+      "blender_version_min": "4.5.0",
+      "website": "https://github.com/CleverChaoFrontiers/Blendhog-Level-Creator-Blender-Addon",
+      "archive_url": "./Blendhog_addon.zip",
+      "archive_size": 13572463,
+      "archive_hash": "sha256:07f4a9f337e6c83eabea695f162c865bb26a7d45bbefecb0f2972e1d0ff887fb"
+    }
+  ]
+}
